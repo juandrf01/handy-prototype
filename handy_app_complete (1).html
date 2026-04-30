@@ -1,0 +1,642 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--hp:#FF2D8A;--hpl:#FFD6EC;--hpm:#FFB3D9;--hy:#FFD84D;--hbg:#FFF0F7;--htxt:#1a1a2e;--hmut:#888}
+body{font-family:'Nunito',sans-serif;background:transparent}
+.frame{width:340px;margin:0 auto;background:#1a1a2e;border-radius:44px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.screen-wrap{background:var(--hbg);border-radius:34px;overflow:hidden;height:630px;position:relative}
+.scr{position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;display:none;flex-direction:column}
+.scr.on{display:flex}
+.scr::-webkit-scrollbar{width:0}
+/* STATUS BAR */
+.sbar{background:var(--hp);padding:8px 20px 6px;display:flex;justify-content:space-between;font-size:11px;color:#fff;font-weight:700;flex-shrink:0}
+/* BOTTOM NAV */
+.bbar{background:#fff;border-top:1px solid var(--hpl);padding:8px 0 12px;display:flex;justify-content:space-around;flex-shrink:0;margin-top:auto}
+.nb{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:700;color:var(--hmut);cursor:pointer;border:none;background:none;padding:0 8px}
+.nb.on{color:var(--hp)}
+.nb-i{font-size:20px}
+/* HEADER */
+.hdr{padding:12px 16px 14px;flex-shrink:0;border-radius:0 0 24px 24px}
+.htitle{font-size:20px;font-weight:900;color:#fff;font-family:'Quicksand',sans-serif}
+.hsub{font-size:11px;color:rgba(255,255,255,0.85);margin-top:3px}
+/* BUTTONS */
+.bbtn{background:rgba(255,255,255,0.22);border:none;color:#fff;border-radius:50px;padding:5px 13px;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:7px;display:inline-flex;align-items:center;gap:4px}
+.abtn{border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;width:calc(100% - 24px);display:block;margin:0 12px 10px}
+.abtn.pink{background:var(--hp);color:#fff}
+.abtn.gold{background:#c8950a;color:#fff}
+.abtn.outline{background:#fff;color:var(--hp);border:2px solid var(--hp)}
+.abtn.dark{background:#1a1a2e;color:#fff}
+/* CHIPS */
+.pchip{background:var(--hp);color:#fff;border-radius:50px;padding:7px 13px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.ychip{background:var(--hy);color:#7a5800;border-radius:50px;padding:7px 13px;font-size:12px;font-weight:800;cursor:pointer}
+.chip-row{display:flex;gap:8px;padding:8px 12px 0;flex-shrink:0}
+/* SECTION TITLE */
+.sec-ttl{font-size:11px;font-weight:800;color:var(--hp);text-align:center;padding:9px 16px 5px;letter-spacing:0.5px;text-transform:uppercase;flex-shrink:0}
+/* CATEGORY CARDS */
+.cats{padding:0 12px 8px;display:flex;flex-direction:column;gap:7px;flex-shrink:0}
+.cc{border-radius:14px;padding:12px 15px;display:flex;align-items:center;gap:11px;cursor:pointer;font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;color:var(--htxt);border:none;text-align:left;width:100%}
+.cc .ci{font-size:24px;width:30px;text-align:center}
+.cc .ca{margin-left:auto;color:rgba(0,0,0,0.3);font-size:14px}
+.c1{background:#FFE8A3}.c2{background:#B8E4FF}.c3{background:#D1D5DB}.c4{background:#E9D5FF}.c5{background:#FECACA}.c6{background:#A7F3D0}
+/* CARDS */
+.card{background:#fff;border-radius:14px;border:1.5px solid var(--hpl);padding:12px 14px;margin:0 12px 10px}
+.ctitle{font-size:12px;font-weight:800;color:var(--hmut);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px}
+/* BENEFIT ROWS */
+.benefit-row{display:flex;align-items:flex-start;gap:9px;padding:6px 0;border-bottom:1px solid var(--hpl)}
+.benefit-row:last-child{border:none}
+.b-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.b-txt{font-size:12px;font-weight:700;color:var(--htxt);line-height:1.4}
+.b-sub{font-size:11px;color:var(--hmut);font-weight:600}
+/* PRICE BOXES */
+.price-box{background:var(--hp);border-radius:16px;padding:14px;text-align:center;margin:0 12px 10px}
+.price-box.gold{background:#c8950a}
+.price-box.dark{background:#1a1a2e}
+.price-amt{font-size:28px;font-weight:900;color:#fff;font-family:'Quicksand',sans-serif}
+.price-per{font-size:13px;color:rgba(255,255,255,0.85);font-weight:700}
+.price-note{font-size:11px;color:rgba(255,255,255,0.75);margin-top:4px}
+/* TABS */
+.tab-row{display:flex;gap:6px;padding:10px 12px 0;flex-shrink:0}
+.tab{flex:1;border-radius:50px;padding:8px 6px;font-size:11px;font-weight:800;color:var(--hmut);cursor:pointer;border:2px solid var(--hpl);background:#fff}
+.tab.on{background:var(--hp);color:#fff;border-color:var(--hp)}
+/* FORM */
+.fi{width:100%;background:#fff;border:1.5px solid var(--hpl);border-radius:12px;padding:9px 13px;font-size:13px;color:var(--htxt);font-family:'Nunito',sans-serif;font-weight:600;outline:none;margin-bottom:10px}
+.flbl{font-size:11px;font-weight:800;color:var(--hmut);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px}
+/* INFO BOX */
+.info-box{background:#fff;border-radius:12px;border-left:4px solid var(--hp);padding:10px 12px;margin:8px 12px;font-size:12px;color:var(--htxt);font-weight:600;line-height:1.6;flex-shrink:0}
+/* SERVICE LIST */
+.svc-list{padding:0 12px 8px;display:flex;flex-direction:column;gap:8px}
+.svc-row{background:#fff;border-radius:14px;border:1.5px solid var(--hpl);padding:11px 13px;display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.si{font-size:24px;width:28px;text-align:center;flex-shrink:0;margin-top:2px}
+.sinfo{flex:1}
+.sn{font-size:13px;font-weight:800;color:var(--htxt)}
+.sdesc{font-size:11px;color:var(--hmut);font-weight:600;line-height:1.5;margin-top:3px}
+.spts{text-align:right;flex-shrink:0}
+.sp1{font-size:15px;font-weight:900;color:var(--hp);font-family:'Quicksand',sans-serif}
+.sp1 span{font-size:10px;font-weight:700}
+.sp2{font-size:10px;font-weight:800;color:#2e7d32;background:#e8f5e9;border-radius:20px;padding:2px 7px;display:inline-block;margin-top:3px}
+/* BOOKING */
+.prov-row{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px}
+.pc{flex-shrink:0;background:#fff;border:1.5px solid var(--hpl);border-radius:13px;padding:9px 11px;text-align:center;cursor:pointer;min-width:82px}
+.pc.sel{border-color:var(--hp);background:var(--hpl)}
+.pav{width:38px;height:38px;border-radius:50%;background:var(--hp);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 4px}
+.pn{font-size:11px;font-weight:800;color:var(--htxt)}
+.ps{font-size:10px;color:#f59e0b}
+.pt{font-size:10px;font-weight:800;color:var(--hp)}
+.cost-r{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--hpl)}
+.cost-r:last-child{border:none}
+.cl{font-size:12px;color:var(--hmut);font-weight:600}
+.cv{font-size:13px;font-weight:800;color:var(--htxt)}
+.cv.pink{font-size:16px;color:var(--hp);font-family:'Quicksand',sans-serif}
+.cv.grn{color:#2e7d32}
+.sbanner{background:#e8f5e9;border-radius:12px;padding:9px 12px;display:flex;align-items:center;gap:8px;border:1px solid #a5d6a7;margin-bottom:10px}
+.sbtxt{font-size:12px;font-weight:800;color:#1b5e20;flex:1}
+/* DISCLAIMER */
+.disc-box{background:#fff7f0;border-radius:12px;border:1.5px solid #ffd6a0;padding:10px 12px;margin:0 12px 14px}
+.disc-title{font-size:11px;font-weight:800;color:#b45309;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:5px}
+.disc-txt{font-size:11px;color:#78350f;font-weight:600;line-height:1.6}
+/* PROFILE */
+.prof-item{background:#fff;border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px;border:1px solid var(--hpl);cursor:pointer}
+.prof-item-lbl{font-size:13px;font-weight:700;color:var(--htxt);flex:1}
+.prof-arrow{color:var(--hmut);font-size:14px}
+/* NOTIF BADGE */
+.notif-rel{position:relative;display:inline-block}
+.notif-rel::after{content:'1';position:absolute;top:-5px;right:-9px;background:var(--hp);color:#fff;border-radius:50%;width:14px;height:14px;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:14px;text-align:center}
+/* APPLICATION SUBMITTED */
+.app-success-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center;gap:14px}
+.app-circle{width:80px;height:80px;background:linear-gradient(135deg,#34D399,#059669);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto;box-shadow:0 8px 24px rgba(5,150,105,0.3)}
+.app-title{font-size:22px;font-weight:900;color:#059669;font-family:'Quicksand',sans-serif}
+.app-sub{font-size:13px;color:var(--htxt);font-weight:600;line-height:1.6}
+.app-card{background:#fff;border-radius:16px;border:1.5px solid #a7f3d0;padding:14px;width:100%;text-align:left}
+.app-step{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #e8f5e9}
+.app-step:last-child{border:none}
+.app-step-num{width:22px;height:22px;background:#059669;color:#fff;border-radius:50%;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.app-step-txt{font-size:12px;font-weight:700;color:var(--htxt);line-height:1.4}
+.app-step-sub{font-size:11px;color:var(--hmut);font-weight:600}
+</style>
+
+<div class="frame">
+<div class="screen-wrap">
+
+<!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
+<div class="scr on" id="s-home">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div class="hdr" style="background:var(--hp)">
+    <div class="htitle">Hello, Maria! 👋🌸</div>
+    <div style="background:#fff;border-radius:50px;padding:8px 14px;display:flex;align-items:center;gap:8px;margin-top:8px">
+      <span style="font-size:14px">🔍</span><span style="color:var(--hmut);font-size:13px">What do you need help with today?</span>
+    </div>
+  </div>
+  <div class="chip-row">
+    <div class="pchip" onclick="show('s-shop')">⭐ 320 pts</div>
+    <div class="ychip" onclick="show('s-member')">✨ HANDY Member</div>
+  </div>
+  <div class="sec-ttl">Choose Service Category</div>
+  <div class="cats">
+    <button class="cc c1" onclick="openCat('home')"><span class="ci">🏠</span>Home &amp; Daily Assistance<span class="ca">›</span></button>
+    <button class="cc c5" onclick="openCat('personal')"><span class="ci">👶</span>Personal &amp; Family Care<span class="ca">›</span></button>
+    <button class="cc c3" onclick="openCat('tech')"><span class="ci">💻</span>Technical Help<span class="ca">›</span></button>
+    <button class="cc c4" onclick="openCat('events')"><span class="ci">🎉</span>Events &amp; Lifestyle<span class="ca">›</span></button>
+    <button class="cc c2" onclick="openCat('social')"><span class="ci">💬</span>Social &amp; Companionship<span class="ca">›</span></button>
+    <button class="cc c6" onclick="openCat('inclusive')"><span class="ci">♿</span>Inclusive Support<span class="ca">›</span></button>
+  </div>
+  <div class="bbar">
+    <button class="nb on" onclick="show('s-home')"><span class="nb-i">🏠</span>Home</button>
+    <button class="nb" onclick="show('s-member')"><span class="nb-i">✨</span>Membership</button>
+    <button class="nb" onclick="show('s-provider')"><span class="nb-i">🛠️</span>Provide</button>
+    <button class="nb" onclick="show('s-profile')"><span class="nb-i">👤</span>Profile</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ POINTS SHOP ═══════════════════════════════ -->
+<div class="scr" id="s-shop">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div class="hdr" style="background:var(--hp)">
+    <button class="bbtn" onclick="show('s-home')">‹ Back</button>
+    <div class="htitle">Buy Points ⭐</div>
+    <div class="hsub">1 point = €0.20 · Use points to book any service</div>
+  </div>
+  <div style="padding:8px 12px 2px;font-size:12px;font-weight:800;color:var(--hmut)">Your balance: <span style="color:var(--hp)">320 pts</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 12px">
+    <div style="background:#fff;border-radius:16px;border:2px solid var(--hpl);padding:13px 10px;text-align:center;cursor:pointer" onclick="selB(this)">
+      <div style="font-size:11px;font-weight:800;color:var(--hmut)">Starter Pack</div>
+      <div style="font-size:22px;font-weight:900;color:var(--hp);font-family:'Quicksand',sans-serif">100<span style="font-size:12px;font-weight:700"> pts</span></div>
+      <div style="font-size:14px;font-weight:800;color:var(--htxt)">€20</div>
+      <div style="font-size:10px;font-weight:800;background:var(--hpl);color:#99005a;border-radius:20px;padding:2px 8px;display:inline-block;margin-top:4px">Standard</div>
+    </div>
+    <div style="background:#fff;border-radius:16px;border:2px solid var(--hpl);padding:13px 10px;text-align:center;cursor:pointer" onclick="selB(this)">
+      <div style="font-size:11px;font-weight:800;color:var(--hmut)">Standard Pack</div>
+      <div style="font-size:22px;font-weight:900;color:var(--hp);font-family:'Quicksand',sans-serif">200<span style="font-size:12px;font-weight:700"> pts</span></div>
+      <div style="font-size:14px;font-weight:800;color:var(--htxt)">€40</div>
+      <div style="font-size:10px;font-weight:800;background:var(--hpl);color:#99005a;border-radius:20px;padding:2px 8px;display:inline-block;margin-top:4px">Standard</div>
+    </div>
+    <div style="background:#fffde7;border-radius:16px;border:2px solid var(--hy);padding:13px 10px;text-align:center;cursor:pointer" onclick="selB(this)">
+      <div style="font-size:11px;font-weight:800;color:#7a5800">Value Pack ⭐</div>
+      <div style="font-size:22px;font-weight:900;color:#c8950a;font-family:'Quicksand',sans-serif">300<span style="font-size:12px;font-weight:700"> pts</span></div>
+      <div style="font-size:14px;font-weight:800;color:var(--htxt)">€55</div>
+      <div style="font-size:10px;font-weight:800;background:var(--hy);color:#7a5800;border-radius:20px;padding:2px 8px;display:inline-block;margin-top:4px">Best Value</div>
+    </div>
+    <div style="background:#fff;border-radius:16px;border:2px solid var(--hpl);padding:13px 10px;text-align:center;cursor:pointer" onclick="selB(this)">
+      <div style="font-size:11px;font-weight:800;color:var(--hmut)">Premium Pack</div>
+      <div style="font-size:22px;font-weight:900;color:var(--hp);font-family:'Quicksand',sans-serif">500<span style="font-size:12px;font-weight:700"> pts</span></div>
+      <div style="font-size:14px;font-weight:800;color:var(--htxt)">€90</div>
+      <div style="font-size:10px;font-weight:800;background:#e8f5e9;color:#1b5e20;border-radius:20px;padding:2px 8px;display:inline-block;margin-top:4px">Discounted</div>
+    </div>
+  </div>
+  <button class="abtn pink">Add Points to Balance →</button>
+  <div style="text-align:center;font-size:11px;color:var(--hmut);padding:0 12px 14px;font-weight:600">Points never expire · Secure checkout</div>
+  <div class="bbar">
+    <button class="nb" onclick="show('s-home')"><span class="nb-i">🏠</span>Home</button>
+    <button class="nb" onclick="show('s-member')"><span class="nb-i">✨</span>Membership</button>
+    <button class="nb" onclick="show('s-provider')"><span class="nb-i">🛠️</span>Provide</button>
+    <button class="nb" onclick="show('s-profile')"><span class="nb-i">👤</span>Profile</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CATEGORY ═══════════════════════════════ -->
+<div class="scr" id="s-cat">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div class="hdr" id="cat-hdr-el">
+    <button class="bbtn" onclick="show('s-home')">‹ Back</button>
+    <div class="htitle" id="cat-title-el">Home &amp; Daily Assistance</div>
+    <div class="hsub" id="cat-sub-el">Everyday household tasks</div>
+  </div>
+  <div style="display:flex;gap:8px;padding:8px 12px 0;align-items:center;flex-shrink:0">
+    <div class="pchip" style="font-size:11px;cursor:default">⭐ 320 pts</div>
+    <div style="background:#fff;border:1.5px solid var(--hpm);border-radius:50px;padding:6px 12px;font-size:11px;font-weight:800;color:var(--hp);cursor:pointer">❓ Help</div>
+  </div>
+  <div class="info-box" id="cat-desc-el">Category description.</div>
+  <div class="svc-list" id="svc-list-el"></div>
+  <div class="disc-box">
+    <div class="disc-title">⚠️ Disclaimer</div>
+    <div class="disc-txt">Handy services are time-based and flexible. If a task requires more time than booked, you will be informed before any extension is confirmed. Additional time is charged transparently through points. Complex or large requests may require multiple sessions or a customised quote.</div>
+  </div>
+  <div class="bbar">
+    <button class="nb" onclick="show('s-home')"><span class="nb-i">🏠</span>Home</button>
+    <button class="nb" onclick="show('s-member')"><span class="nb-i">✨</span>Membership</button>
+    <button class="nb" onclick="show('s-provider')"><span class="nb-i">🛠️</span>Provide</button>
+    <button class="nb" onclick="show('s-profile')"><span class="nb-i">👤</span>Profile</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ BOOKING ═══════════════════════════════ -->
+<div class="scr" id="s-book">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div class="hdr" style="background:var(--hp)">
+    <button class="bbtn" onclick="show('s-cat')">‹ Back</button>
+    <div class="htitle" id="book-title-el">Cleaning</div>
+    <div class="hsub" id="book-time-el">60–90 min</div>
+  </div>
+  <div style="padding:12px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px">
+    <div><div class="flbl">Your Address</div><input class="fi" type="text" placeholder="e.g. Brīvības iela 12, Rīga" /></div>
+    <div><div class="flbl">Date &amp; Time</div><input class="fi" type="text" placeholder="e.g. Tomorrow, 10:00 AM" /></div>
+    <div><div class="flbl">Notes for Provider</div><input class="fi" type="text" placeholder="Any special instructions..." /></div>
+    <div>
+      <div class="flbl" style="margin-bottom:8px">Available Providers</div>
+      <div class="prov-row">
+        <div class="pc sel" onclick="selProv(this,'normal')">
+          <div class="pav">LM</div><div class="pn">Laura M.</div><div class="ps">★★★★★</div><div class="pt">Standard</div>
+        </div>
+        <div class="pc" onclick="selProv(this,'normal')">
+          <div class="pav" style="background:#C084FC">AK</div><div class="pn">Anna K.</div><div class="ps">★★★★☆</div><div class="pt">Standard</div>
+        </div>
+        <div class="pc" onclick="selProv(this,'premium')">
+          <div class="pav" style="background:#FFD84D;color:#7a5800">TJ</div><div class="pn">Tom J.</div><div class="ps">★★★★★</div><div class="pt" style="color:#c8950a">✨ Pro</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin:0">
+      <div class="ctitle">Cost Summary</div>
+      <div class="cost-r"><span class="cl">Service cost</span><span class="cv" id="cc-normal">80 pts</span></div>
+      <div class="cost-r"><span class="cl">✨ Premium price</span><span class="cv grn" id="cc-premium">70 pts</span></div>
+      <div class="cost-r"><span class="cl">Your balance</span><span class="cv">320 pts</span></div>
+      <div class="cost-r"><span class="cl" style="font-weight:800;color:var(--htxt)">You pay</span><span class="cv pink" id="cc-final">80 pts</span></div>
+    </div>
+    <div class="sbanner">
+      <span style="font-size:20px">✨</span>
+      <div class="sbtxt" id="save-banner-txt">HANDY Member? Save pts on this service!</div>
+    </div>
+    <button style="background:var(--hp);color:#fff;border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;width:100%" onclick="show('s-confirm')">Confirm Booking →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ BOOKING CONFIRMATION ═══════════════════════════════ -->
+<div class="scr" id="s-confirm">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div style="flex:1;overflow-y:auto;padding:20px 14px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+    <div style="width:72px;height:72px;background:var(--hp);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px">✅</div>
+    <div style="font-size:20px;font-weight:900;color:var(--hp);font-family:'Quicksand',sans-serif">Booking Confirmed!</div>
+    <p style="font-size:12px;color:var(--hmut);font-weight:600">Your provider will be notified. You'll get an update when they're on the way.</p>
+    <div class="card" style="margin:0;width:100%;text-align:left">
+      <div class="cost-r"><span class="cl">Service</span><span class="cv" id="conf-svc">Cleaning</span></div>
+      <div class="cost-r"><span class="cl">Provider</span><span class="cv">Laura M. ★★★★★</span></div>
+      <div class="cost-r"><span class="cl">Duration</span><span class="cv" id="conf-time">60–90 min</span></div>
+      <div class="cost-r"><span class="cl">Standard price</span><span class="cv" id="conf-normal">80 pts</span></div>
+      <div class="cost-r"><span class="cl">✨ Premium price</span><span class="cv grn" id="conf-premium">70 pts</span></div>
+      <div class="cost-r"><span class="cl" style="font-weight:800;color:var(--htxt)">Points used</span><span class="cv pink" id="conf-used">80 pts</span></div>
+      <div class="cost-r"><span class="cl">Remaining balance</span><span class="cv" id="conf-remain">240 pts</span></div>
+    </div>
+    <div class="sbanner" style="width:100%">
+      <span style="font-size:18px">💚</span>
+      <div class="sbtxt" id="conf-save-txt">Go Premium and save pts on every booking!</div>
+    </div>
+    <div style="background:var(--hpl);border-radius:12px;padding:10px 12px;width:100%;text-align:left;border:1px solid var(--hpm)">
+      <div style="font-size:12px;font-weight:800;color:var(--hp);margin-bottom:3px">💝 Help from the Heart</div>
+      <div style="font-size:11px;color:var(--htxt);font-weight:600">Want to offer this as a voluntary service? Toggle on to make it free and support your community!</div>
+    </div>
+    <button style="background:var(--hp);color:#fff;border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;width:100%" onclick="show('s-home')">Back to Home 🏠</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ HANDY MEMBER ═══════════════════════════════ -->
+<div class="scr" id="s-member">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div class="hdr" style="background:var(--hp)">
+    <button class="bbtn" onclick="show('s-home')">‹ Back</button>
+    <div class="htitle">✨ HANDY Member</div>
+    <div class="hsub">For customers who need regular help</div>
+  </div>
+  <div class="price-box" style="margin:10px 12px">
+    <div class="price-amt">€30<span style="font-size:14px;font-weight:700"> / month</span></div>
+    <div class="price-per">Includes 225 points · No hidden fees</div>
+    <div class="price-note">Cancel anytime · Renews monthly automatically</div>
+  </div>
+  <div class="card">
+    <div class="ctitle">✨ Member Benefits</div>
+    <div class="benefit-row"><div class="b-icon">⭐</div><div><div class="b-txt">225 points included monthly</div><div class="b-sub">Credited automatically on every renewal</div></div></div>
+    <div class="benefit-row"><div class="b-icon">🚀</div><div><div class="b-txt">Priority access to service providers</div><div class="b-sub">Get matched faster than regular users</div></div></div>
+    <div class="benefit-row"><div class="b-icon">💰</div><div><div class="b-txt">Discounts on additional point purchases</div><div class="b-sub">Save extra on every bundle top-up</div></div></div>
+    <div class="benefit-row"><div class="b-icon">🎂</div><div><div class="b-txt">Birthday reward points</div><div class="b-sub">Surprise bonus points added on your birthday</div></div></div>
+    <div class="benefit-row"><div class="b-icon">💬</div><div><div class="b-txt">Premium support &amp; faster booking</div><div class="b-sub">Dedicated help line with priority response</div></div></div>
+    <div class="benefit-row"><div class="b-icon">✅</div><div><div class="b-txt">Premium service pricing</div><div class="b-sub">Pay fewer points on every booking</div></div></div>
+  </div>
+  <button class="abtn pink" style="margin-top:0">Subscribe Now — €30/month</button>
+  <button class="abtn outline" style="margin-top:0">I'm Already a Member ✨</button>
+  <div style="margin:4px 12px;border-top:1px dashed var(--hpl)"></div>
+  <div style="text-align:center;font-size:12px;font-weight:800;color:var(--hmut);padding:8px 12px 4px">Are you a service provider?</div>
+  <button class="abtn dark" onclick="show('s-provider')" style="margin-top:0">🛠️ Join as a Provider →</button>
+  <div style="text-align:center;font-size:11px;color:var(--hmut);padding:0 12px 6px;font-weight:600">Cancel anytime · Membership renews monthly</div>
+  <div class="bbar">
+    <button class="nb" onclick="show('s-home')"><span class="nb-i">🏠</span>Home</button>
+    <button class="nb on" onclick="show('s-member')"><span class="nb-i">✨</span>Membership</button>
+    <button class="nb" onclick="show('s-provider')"><span class="nb-i">🛠️</span>Provide</button>
+    <button class="nb" onclick="show('s-profile')"><span class="nb-i">👤</span>Profile</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ BECOME A PROVIDER ═══════════════════════════════ -->
+<div class="scr" id="s-provider">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div class="hdr" style="background:#1a1a2e">
+    <button class="bbtn" onclick="show('s-home')">‹ Back</button>
+    <div class="htitle">🛠️ Become a Provider</div>
+    <div class="hsub">Offer your skills, earn on your schedule</div>
+  </div>
+  <div class="tab-row">
+    <button class="tab" id="tab-free" onclick="selPlan('free')">Free</button>
+    <button class="tab on" id="tab-pro" onclick="selPlan('pro')">⭐ Pro</button>
+    <button class="tab" id="tab-join" onclick="selPlan('join')">📝 Apply</button>
+  </div>
+
+  <!-- FREE PLAN -->
+  <div id="plan-free-content" style="display:none;flex:1;overflow-y:auto">
+    <div style="padding:10px 12px 0">
+      <div class="price-box dark" style="margin:0 0 10px">
+        <div class="price-amt">€0<span style="font-size:14px;font-weight:700"> / month</span></div>
+        <div class="price-per">Basic listing · 25% platform commission</div>
+        <div class="price-note">Start earning with zero upfront cost</div>
+      </div>
+      <div class="card" style="margin:0 0 10px">
+        <div class="ctitle">Free Provider Includes</div>
+        <div class="benefit-row"><div class="b-icon">📋</div><div><div class="b-txt">Public profile listing</div><div class="b-sub">Visible to all users on the platform</div></div></div>
+        <div class="benefit-row"><div class="b-icon">📅</div><div><div class="b-txt">Accept bookings &amp; manage availability</div><div class="b-sub">Full calendar access included</div></div></div>
+        <div class="benefit-row"><div class="b-icon">💳</div><div><div class="b-txt">25% platform commission per booking</div><div class="b-sub">Upgrade to Pro to reduce your fees</div></div></div>
+      </div>
+      <button class="abtn dark" style="margin:0 0 10px" onclick="selPlan('join')">Apply as Free Provider →</button>
+    </div>
+  </div>
+
+  <!-- PRO PLAN -->
+  <div id="plan-pro-content" style="flex:1;overflow-y:auto">
+    <div style="padding:10px 12px 0">
+      <div class="price-box gold" style="margin:0 0 10px">
+        <div class="price-amt">€30<span style="font-size:14px;font-weight:700"> / month</span></div>
+        <div class="price-per">Pro subscription · Reduced commission</div>
+        <div class="price-note">More visibility · More earnings · More trust</div>
+      </div>
+      <div class="card" style="margin:0 0 10px">
+        <div class="ctitle">⭐ Pro Provider Benefits</div>
+        <div class="benefit-row"><div class="b-icon">🔝</div><div><div class="b-txt">Higher ranking in search results</div><div class="b-sub">Appear at the top for your service categories</div></div></div>
+        <div class="benefit-row"><div class="b-icon">✅</div><div><div class="b-txt">"Verified Provider" badge</div><div class="b-sub">Builds instant trust with customers</div></div></div>
+        <div class="benefit-row"><div class="b-icon">⭐</div><div><div class="b-txt">Access to HANDY Members</div><div class="b-sub">Priority bookings from subscribed customers</div></div></div>
+        <div class="benefit-row"><div class="b-icon">💸</div><div><div class="b-txt">Reduced commission: 15%–20%</div><div class="b-sub">Instead of 25% for free providers</div></div></div>
+      </div>
+      <button class="abtn gold" style="margin:0 0 10px" onclick="selPlan('join')">Apply as Pro Provider →</button>
+    </div>
+  </div>
+
+  <!-- JOIN FORM -->
+  <div id="plan-join-content" style="display:none;flex:1;overflow-y:auto">
+    <div style="padding:12px 12px 0">
+      <div class="card" style="margin:0 0 10px">
+        <div class="ctitle">📝 Your Details</div>
+        <div class="flbl">Full Name</div>
+        <input class="fi" id="join-name" type="text" placeholder="e.g. Laura Martinez" />
+        <div class="flbl">Email Address</div>
+        <input class="fi" id="join-email" type="email" placeholder="e.g. laura@email.com" />
+        <div class="flbl">Phone Number</div>
+        <input class="fi" type="tel" placeholder="e.g. +371 2000 0000" />
+        <div class="flbl">City / Location</div>
+        <input class="fi" type="text" placeholder="e.g. Riga, Latvia" />
+        <div class="flbl">Services You Offer</div>
+        <input class="fi" type="text" placeholder="e.g. Cleaning, Pet Care, Errands" />
+        <div class="flbl">Tell us a bit about yourself</div>
+        <input class="fi" type="text" placeholder="Why do you want to join Handy?" />
+      </div>
+      <div style="margin:0 0 10px">
+        <div style="font-size:12px;font-weight:800;color:var(--htxt);margin-bottom:8px;padding:0 0 0 0">Choose your plan:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="border:2px solid var(--hpl);border-radius:12px;padding:10px;text-align:center;cursor:pointer;transition:.15s" id="jp-free" onclick="selJoinPlan('free')">
+            <div style="font-size:11px;font-weight:800;color:var(--hmut)">Free</div>
+            <div style="font-size:18px;font-weight:900;color:var(--hp);font-family:'Quicksand',sans-serif">€0</div>
+            <div style="font-size:10px;color:var(--hmut);font-weight:600">25% commission</div>
+          </div>
+          <div style="border:2px solid #c8950a;background:#fffde7;border-radius:12px;padding:10px;text-align:center;cursor:pointer" id="jp-pro" onclick="selJoinPlan('pro')">
+            <div style="font-size:11px;font-weight:800;color:#7a5800">Pro ⭐</div>
+            <div style="font-size:18px;font-weight:900;color:#c8950a;font-family:'Quicksand',sans-serif">€30</div>
+            <div style="font-size:10px;color:#7a5800;font-weight:700">/month</div>
+          </div>
+        </div>
+      </div>
+      <button class="abtn gold" style="margin:0 0 4px" onclick="submitApp()">Submit Application →</button>
+      <div style="text-align:center;font-size:11px;color:var(--hmut);padding:0 0 14px;font-weight:600">We'll review and get back to you within 24h</div>
+    </div>
+  </div>
+
+  <div class="bbar">
+    <button class="nb" onclick="show('s-home')"><span class="nb-i">🏠</span>Home</button>
+    <button class="nb" onclick="show('s-member')"><span class="nb-i">✨</span>Membership</button>
+    <button class="nb on"><span class="nb-i">🛠️</span>Provide</button>
+    <button class="nb" onclick="show('s-profile')"><span class="nb-i">👤</span>Profile</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ APPLICATION SUBMITTED ═══════════════════════════════ -->
+<div class="scr" id="s-app-submitted">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div class="app-success-wrap">
+    <div class="app-circle">🎉</div>
+    <div class="app-title">Application Submitted!</div>
+    <div class="app-sub">Thank you for joining the HANDY team! We've received your application and will be in touch very soon.</div>
+
+    <!-- Email confirmation card -->
+    <div style="background:#f0fdf4;border-radius:16px;border:1.5px solid #a7f3d0;padding:14px 14px;width:100%;text-align:left">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <span style="font-size:20px">📧</span>
+        <div style="font-size:13px;font-weight:800;color:#065f46">Check your email</div>
+      </div>
+      <div style="font-size:12px;color:#064e3b;font-weight:600;line-height:1.6">A confirmation has been sent to <span id="submitted-email" style="color:#059669;font-weight:800">your email address</span>. Please check your inbox (and spam folder just in case).</div>
+    </div>
+
+    <!-- What happens next -->
+    <div class="app-card">
+      <div style="font-size:12px;font-weight:800;color:var(--hmut);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">What happens next</div>
+      <div class="app-step">
+        <div class="app-step-num">1</div>
+        <div><div class="app-step-txt">Application review</div><div class="app-step-sub">Our team reviews your details within 24 hours</div></div>
+      </div>
+      <div class="app-step">
+        <div class="app-step-num">2</div>
+        <div><div class="app-step-txt">We get in contact</div><div class="app-step-sub">You'll receive an email or call to confirm your profile</div></div>
+      </div>
+      <div class="app-step">
+        <div class="app-step-num">3</div>
+        <div><div class="app-step-txt">Go live &amp; start earning</div><div class="app-step-sub">Your provider profile is activated and you're ready to accept bookings</div></div>
+      </div>
+    </div>
+
+    <button style="background:var(--hp);color:#fff;border:none;border-radius:50px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;width:100%" onclick="show('s-home')">Back to Home 🏠</button>
+    <div style="font-size:11px;color:var(--hmut);font-weight:600">Questions? Contact us at hello@handyapp.com</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PROFILE ═══════════════════════════════ -->
+<div class="scr" id="s-profile">
+  <div class="sbar"><span>09:41</span><span>HANDY</span><span>100%</span></div>
+  <div style="background:var(--hp);padding:18px 16px;text-align:center;flex-shrink:0">
+    <div style="width:64px;height:64px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 8px;border:3px solid var(--hy)">👤</div>
+    <div style="color:#fff;font-size:17px;font-weight:900;font-family:'Quicksand',sans-serif">Maria Rossi</div>
+    <div style="background:var(--hy);color:#7a5800;border-radius:50px;padding:4px 14px;font-size:11px;font-weight:800;display:inline-block;margin-top:5px">✨ HANDY Member</div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:10px 14px">
+    <div style="font-size:10px;font-weight:800;color:var(--hmut);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px">Account</div>
+    <div class="prof-item" onclick="show('s-shop')"><span style="font-size:20px">⭐</span><span class="prof-item-lbl">My Points: 320 pts</span><span class="prof-arrow">›</span></div>
+    <div class="prof-item"><span style="font-size:20px">📋</span><span class="prof-item-lbl">My Bookings</span><span class="prof-arrow">›</span></div>
+    <div class="prof-item"><span style="font-size:20px">⭐</span><span class="prof-item-lbl">My Reviews</span><span class="prof-arrow">›</span></div>
+    <div style="font-size:10px;font-weight:800;color:var(--hmut);text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 7px">Membership</div>
+    <div class="prof-item" style="border-color:var(--hp);background:var(--hpl)" onclick="show('s-member')">
+      <span style="font-size:20px">✨</span>
+      <div style="flex:1"><div style="font-size:13px;font-weight:800;color:var(--hp)">HANDY Member Plan</div><div style="font-size:11px;color:var(--hmut)">€30/month · 225 pts included</div></div>
+      <span class="prof-arrow">›</span>
+    </div>
+    <div class="prof-item" onclick="show('s-provider')"><span style="font-size:20px">🛠️</span><span class="prof-item-lbl">Become a Provider</span><span class="prof-arrow">›</span></div>
+    <div style="font-size:10px;font-weight:800;color:var(--hmut);text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 7px">Support</div>
+    <div class="prof-item"><span style="font-size:20px">❓</span><span class="prof-item-lbl">Help Centre</span><span class="prof-arrow">›</span></div>
+    <div class="prof-item"><span style="font-size:20px">💝</span><span class="prof-item-lbl">Help from the Heart</span><span class="prof-arrow">›</span></div>
+    <div class="prof-item"><span style="font-size:20px">⚙️</span><span class="prof-item-lbl">Settings</span><span class="prof-arrow">›</span></div>
+  </div>
+  <div class="bbar">
+    <button class="nb" onclick="show('s-home')"><span class="nb-i">🏠</span>Home</button>
+    <button class="nb" onclick="show('s-member')"><span class="nb-i">✨</span>Membership</button>
+    <button class="nb" onclick="show('s-provider')"><span class="nb-i">🛠️</span>Provide</button>
+    <button class="nb on" onclick="show('s-profile')"><span class="nb-i">👤</span>Profile</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+/* ── DATA ── */
+const cats={
+  home:{title:'🏠 Home & Daily Assistance',sub:'Everyday household tasks',bg:'#d4a800',
+    desc:'Services that help with everyday household tasks and errands, making daily life easier.',
+    svcs:[
+      {icon:'🧹',name:'Cleaning',time:'60–90 min',normal:80,premium:70,desc:'General home cleaning and organisation support. May include smart organisation advice such as labelling systems and efficient storage methods. If additional time is needed, you are informed before confirmation.'},
+      {icon:'📦',name:'Moving Help',time:'90–120 min',normal:130,premium:110,desc:'Physical assistance with moving, packing, and organising belongings. Providers can help with labelling boxes and planning an efficient moving structure. Extra time is charged through points.'},
+      {icon:'🥗',name:'Meal Prep',time:'60–90 min',normal:90,premium:75,desc:'Basic meal preparation and grocery planning support. Budget guidance and dietary suggestions available. Advanced nutritional planning can be offered as an optional upgrade.'},
+      {icon:'🛒',name:'Errands',time:'45–90 min',normal:60,premium:50,desc:'Multiple small tasks such as package pickup, laundry drop-off, or shopping. If tasks exceed the planned time, you can reduce tasks or extend time with additional points.'}
+    ]},
+  personal:{title:'👶 Personal & Family Care',sub:'Babysitting, elderly & pet care',bg:'#dc4b4b',
+    desc:'Trusted care services for your family, from babysitting to elderly assistance and pet care.',
+    svcs:[
+      {icon:'👶',name:'Babysitting',time:'60–120 min',normal:100,premium:85,desc:'Childcare support including supervision, basic care, and safe engagement activities depending on the child\'s age and needs.'},
+      {icon:'👴',name:'Elderly Assistance',time:'60–120 min',normal:90,premium:80,desc:'Support for elderly individuals including companionship, daily routine help, light household assistance, and mobility support.'},
+      {icon:'🐕',name:'Pet Care',time:'60 min',normal:60,premium:50,desc:'Includes walking, feeding, and basic care for pets when owners are unavailable.'},
+      {icon:'🩺',name:'Personal Care',time:'60–90 min',normal:80,premium:70,desc:'Assistance with daily personal routines such as dressing support, hygiene assistance, and general well-being support.'}
+    ]},
+  tech:{title:'💻 Technical Help',sub:'Phone, laptop & IT support',bg:'#6b7280',
+    desc:'Help with everyday tech tasks — phone setup, Wi-Fi issues, app installation and basic IT support.',
+    svcs:[
+      {icon:'📱',name:'Device Setup',time:'30–60 min',normal:70,premium:60,desc:'Installation and setup of phones, laptops, and applications. Helps users solve basic technical issues and configuration problems.'},
+      {icon:'📶',name:'IT Support',time:'30–60 min',normal:80,premium:70,desc:'Covers Wi-Fi issues, connectivity problems, and basic troubleshooting for home or personal devices.'}
+    ]},
+  events:{title:'🎉 Events & Lifestyle',sub:'Entertainment & event planning',bg:'#9333ea',
+    desc:'Services for event planning, entertainment and lifestyle support to make your occasions special.',
+    svcs:[
+      {icon:'🎪',name:'Event Planning',time:'90–180 min',normal:150,premium:130,desc:'Full or partial event planning support. Small events can be completed in one session; larger events may require multiple sessions and a customised quote based on time and complexity.'},
+      {icon:'🎵',name:'DJ Service',time:'120–180 min',normal:200,premium:180,desc:'Entertainment service for events. If additional time is required beyond the planned booking, extra points are charged.'},
+      {icon:'📸',name:'Photographer',time:'120–180 min',normal:220,premium:200,desc:'Photography services for events or personal sessions. Extended time or additional shooting sessions require extra points.'},
+      {icon:'✈️',name:'Travel Planning',time:'60–120 min',normal:100,premium:85,desc:'Assistance with planning trips, itineraries, and transport organisation. Larger or complex trips may require additional consultation sessions.'}
+    ]},
+  social:{title:'💬 Social & Companionship',sub:'Social interaction & support',bg:'#2563eb',
+    desc:'Services focused on social interaction, emotional support and companionship during activities.',
+    svcs:[
+      {icon:'💬',name:'Conversation & Companionship',time:'60–120 min',normal:60,premium:50,desc:'Social interaction such as talking, going for coffee, or walking together. For users needing additional emotional or psychological support, optional professional assistance can be offered at extra cost.'},
+      {icon:'📅',name:'Event Companion',time:'120–180 min',normal:120,premium:100,desc:'A companion service for attending events such as family gatherings, business meetings, or social occasions.'},
+      {icon:'🛡️',name:'Safety Companion',time:'60–120 min',normal:100,premium:85,desc:'A personal safety support service for individuals who may feel unsafe travelling alone, especially at night or in unfamiliar environments. The companion ensures your safety throughout.'}
+    ]},
+  inclusive:{title:'♿ Inclusive Support',sub:'Help for all abilities',bg:'#059669',
+    desc:'Dedicated support for people with disabilities — mobility assistance, daily life support and accessibility help.',
+    svcs:[
+      {icon:'♿',name:'Mobility Assistance',time:'60–120 min',normal:90,premium:80,desc:'Support for individuals with mobility limitations, including help with movement, daily routines, and basic physical assistance.'},
+      {icon:'🤝',name:'Daily Disability Support',time:'120–180 min',normal:150,premium:130,desc:'Comprehensive daily support for people with disabilities, including help with cooking, getting ready, and home assistance depending on individual needs.'},
+      {icon:'🏥',name:'Appointment Assistance',time:'60–120 min',normal:100,premium:85,desc:'Support for attending medical or official appointments, especially for elderly individuals or people with visual, hearing, or mobility impairments.'}
+    ]}
+};
+
+let curSvc=null;
+
+/* ── NAVIGATION ── */
+function show(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.getElementById(id).scrollTop=0;
+}
+
+/* ── POINTS SHOP ── */
+function selB(el){
+  el.parentNode.querySelectorAll('[onclick^="selB"]').forEach(c=>c.style.borderColor='');
+  el.style.borderColor='var(--hp)';
+}
+
+/* ── CATEGORY & BOOKING ── */
+function openCat(key){
+  const c=cats[key];
+  document.getElementById('cat-hdr-el').style.background=c.bg;
+  document.getElementById('cat-title-el').textContent=c.title;
+  document.getElementById('cat-sub-el').textContent=c.sub;
+  document.getElementById('cat-desc-el').textContent=c.desc;
+  const list=document.getElementById('svc-list-el');
+  list.innerHTML=c.svcs.map(s=>`
+    <div class="svc-row" onclick='openBook(${JSON.stringify(s).replace(/'/g,"\\'")} )'>
+      <div class="si">${s.icon}</div>
+      <div class="sinfo">
+        <div class="sn">${s.name}</div>
+        <div class="sdesc">${s.desc}</div>
+        <div style="font-size:10px;color:var(--hmut);font-weight:700;margin-top:4px">⏱ ${s.time}</div>
+      </div>
+      <div class="spts">
+        <div class="sp1">${s.normal}<span> pts</span></div>
+        <div class="sp2">✨ ${s.premium} pts</div>
+      </div>
+    </div>`).join('');
+  show('s-cat');
+}
+function openBook(svc){
+  curSvc=svc;
+  document.getElementById('book-title-el').textContent=svc.name;
+  document.getElementById('book-time-el').textContent=svc.time;
+  document.getElementById('cc-normal').textContent=svc.normal+' pts';
+  document.getElementById('cc-premium').textContent=svc.premium+' pts';
+  document.getElementById('cc-final').textContent=svc.normal+' pts';
+  document.getElementById('conf-svc').textContent=svc.name;
+  document.getElementById('conf-time').textContent=svc.time;
+  document.getElementById('conf-normal').textContent=svc.normal+' pts';
+  document.getElementById('conf-premium').textContent=svc.premium+' pts';
+  document.getElementById('conf-used').textContent=svc.normal+' pts';
+  document.getElementById('conf-remain').textContent=(320-svc.normal)+' pts';
+  const save=svc.normal-svc.premium;
+  document.getElementById('save-banner-txt').textContent='✨ HANDY Member? Switch to a Premium provider and save '+save+' pts!';
+  document.getElementById('conf-save-txt').textContent='Go Premium and save '+save+' pts on every '+svc.name+' booking!';
+  document.querySelectorAll('.pc').forEach((c,i)=>{c.classList.remove('sel');if(i===0)c.classList.add('sel')});
+  show('s-book');
+}
+function selProv(el,type){
+  document.querySelectorAll('.pc').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  if(!curSvc)return;
+  const isPrem=type==='premium';
+  const pts=isPrem?curSvc.premium:curSvc.normal;
+  const save=curSvc.normal-curSvc.premium;
+  document.getElementById('cc-final').textContent=pts+' pts';
+  document.getElementById('conf-used').textContent=pts+' pts';
+  document.getElementById('conf-remain').textContent=(320-pts)+' pts';
+  const bt=document.getElementById('save-banner-txt');
+  const cs=document.getElementById('conf-save-txt');
+  if(isPrem){bt.textContent='✨ Premium price applied! You saved '+save+' pts.';cs.textContent='You saved '+save+' pts with your Premium membership!';}
+  else{bt.textContent='✨ HANDY Member? Switch to a Premium provider and save '+save+' pts!';cs.textContent='Go Premium and save '+save+' pts on every '+curSvc.name+' booking!';}
+}
+
+/* ── PROVIDER TABS ── */
+function selPlan(plan){
+  ['free','pro','join'].forEach(p=>{
+    document.getElementById('tab-'+p).classList.toggle('on',p===plan);
+    const el=document.getElementById('plan-'+p+'-content');
+    if(el) el.style.display=(p===plan?'flex':'none');
+  });
+}
+function selJoinPlan(plan){
+  document.getElementById('jp-free').style.borderColor=plan==='free'?'var(--hp)':'var(--hpl)';
+  document.getElementById('jp-pro').style.borderColor=plan==='pro'?'#c8950a':'#c8950a';
+  document.getElementById('jp-pro').style.background=plan==='pro'?'#fff8e1':'#fffde7';
+}
+function submitApp(){
+  const email=document.getElementById('join-email').value.trim()||'your email address';
+  document.getElementById('submitted-email').textContent=email;
+  show('s-app-submitted');
+}
+
+/* ── INIT ── */
+selPlan('pro');
+</script>
